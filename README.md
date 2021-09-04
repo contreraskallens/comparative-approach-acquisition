@@ -25,7 +25,7 @@ Hand extracted from Slobin, D. I. (2014). Before the beginning: The development 
 
 * `language_data.csv`
 
-Hand constructed using Glottolog. First column (In_DB) contains the unique reference of each item in each of the previous databases.
+Hand constructed using Glottolog. First column (`In_DB`) contains the unique reference of each item in each of the previous databases.
 
 **Note that the data from Kidd & Garcia (2021) is not publicly available. Please request it to the authors.**
 
@@ -33,7 +33,7 @@ Hand constructed using Glottolog. First column (In_DB) contains the unique refer
 
 * `process_data.R`
 
-Reads and manipulates the data to generate a language by count dataframe. Generates **many_babies.csv**, **wordbank_data.csv** and **childes_utterance_stats.csv**.
+Reads and manipulates the data to generate a language by count dataframe. Generates `many_babies.csv`, `wordbank_data.csv` and `childes_utterance_stats.csv`.
 
 * `cdps_script.R`
 
