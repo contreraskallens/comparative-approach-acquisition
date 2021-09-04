@@ -58,7 +58,7 @@ genus.plot <- ggplot(genus.db, aes(x = db, y = Count, fill = Genus, group = Genu
   theme(panel.grid.major.x = element_blank(),
         axis.title.x = element_blank())
 genus.plot
-ggsave(plot = genus.plot, filename = "figures/genus_plot.png", dpi = 1000, bg = "white",
+ggsave(plot = genus.plot, filename = "figures/genus_plot.png", dpi = 300, bg = "white",
        width = 7.47, height = 4.59)   
 
 # Do it with families now ----
@@ -77,7 +77,7 @@ family.plot <- ggplot(family.db, aes(x = db, y = Count, fill = Family, group = F
         axis.title.x = element_blank())
 
 family.plot
-ggsave(plot = family.plot, filename = "figures/family_plot.png", dpi = 1000, bg = "white",
+ggsave(plot = family.plot, filename = "figures/family_plot.png", dpi = 300, bg = "white",
        width = 7.47, height = 4.59)   
 
 # Generate paper plot. DO THIS ONLY IF YOU HAVE KIDD & GARCIA DATA ----
@@ -99,7 +99,7 @@ paper.plot <- ggplot(paper.db, aes(x = db, y = Count, fill = Family, group = Fam
   scale_fill_manual(name = "Language Group", values = wesanderson::wes_palette("Darjeeling1", n = 4, type = "discrete")) +
   theme(axis.title.x = element_blank(), panel.grid.major.x = element_blank())
 paper.plot
-ggsave(plot = paper.plot, filename = "figures/cdps_family.png", bg = "white", dpi = 1000,
+ggsave(plot = paper.plot, filename = "figures/cdps_family.png", bg = "white", dpi = 300,
        width = 7.47, height = 4.59)
 ggsave(plot = paper.plot, filename =  "figures/cdps_family.pdf", bg = "white", dpi = 1000,
        width = 7.47, height = 4.59)
