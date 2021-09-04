@@ -1,7 +1,7 @@
 # Towards a Comparative Approach to Language Acquisition
-Script for producing figures from Christiansen, Contreras Kallens &amp; Trecca (In Press) Towards A Comparative Approach to Language Acquisition. CDPS.
+Script for producing figures from Christiansen, Contreras Kallens &amp; Trecca (In Press). *Towards A Comparative Approach to Language Acquisition*. *Current Directions in Psychological Science*.
 
-# Data origins
+# Data sources
 
 * `isbilen_tallies.csv`
 
