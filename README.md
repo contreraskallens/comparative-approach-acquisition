@@ -42,6 +42,6 @@ Reads all previous databases and aggregates over the target grouping.
 Generates:
 * A *Genus* plot (**genus_plot**) showing the proportions of items for English, Romance, Germanic and Other languages.
 * A *Family* plot (**family_plot**) showing the proportions of items for English, Other Indo-European and Non-Indo-European languages.
-* A *Paper* plot (**cdps_family**) using a *subset* of the databases, namely Childes, Many Babies and Kidd & Garcia, showing the proportion of items for English, Other Indo-European and Non-Indo-European languages.
+* A *Paper* plot (**cdps_family**) using a *subset* of the databases, namely Childes, Many Babies and Kidd & Garcia, showing the proportion of items for English, Other Indo-European and Non-Indo-European languages. The version used in the paper is **cdps_family.pdf**. Also includes a smaller, web-frendlier version of the plot, **cdps_family_small.png**.
 
 **Note again that the last paper can only be generated with the Kidd & Garcia (2021) data, not included in this repository**.
