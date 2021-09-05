@@ -27,7 +27,7 @@ Script for producing figures from Christiansen, Contreras Kallens &amp; Trecca (
 
 	Hand-constructed using Glottolog. First column (`In_DB`) contains the unique reference of each item in each of the previous databases.
 
-**Note that the data from Kidd & Garcia (2021) is not publicly available. Please request it to the authors.**
+**Note that the data from Kidd & Garcia (2021) is not publicly available. Please request it from the authors.**
 
 # Scripts
 
