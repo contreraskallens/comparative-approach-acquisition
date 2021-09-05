@@ -1,5 +1,5 @@
 # Towards a Comparative Approach to Language Acquisition
-Script for producing figures from Christiansen, Contreras Kallens &amp; Trecca (In Press). *Towards A Comparative Approach to Language Acquisition*. *Current Directions in Psychological Science*.
+Script for producing figures from Christiansen, Contreras Kallens &amp; Trecca (In Press). *Towards A Comparative Approach to Language Acquisition*. *Current Directions in Psychological Science*. Also included are extra figures that include additional data to demonstrate the dominance of English in language acquisition research
 
 # Data sources
 
@@ -11,7 +11,7 @@ Script for producing figures from Christiansen, Contreras Kallens &amp; Trecca (
 
 	From Many Babies Infant-directed speech preference data, MB1. Clone repository https://github.com/manybabies/mb1-analysis-public and rename `processed_data/01_merged_output.csv`. Tally is produced in `process_data.R`. Processed into `many_babies.csv`.
 
-* wordbank_data.csv
+* `wordbank_data.csv`
 
 	Used *wordbankr* package and processed in `process_data.R`.
 
