@@ -27,9 +27,9 @@ wordbank.counts <- group_by(wordbank, language) %>%
 
 write_csv(wordbank.counts, "processed_data/wordbank_data.csv")
 
-# Many Baby IDS ----
+# Many Babies IDS ----
 
-many.babies <- read_csv("raw_data/many_babies_raw.csv")
+many.babies <- read_csv("https://raw.githubusercontent.com/manybabies/mb1-analysis-public/master/processed_data/01_merged_ouput.csv")
 
 # Get one entry per baby
 baby.info <- many.babies %>% 
@@ -44,3 +44,21 @@ mb.languages <- baby.info %>%
   tally(name = "Count")
 
 write_csv(mb.languages, "processed_data/many_babies.csv")
+
+# Build iso_code to Name, Genus and Family dataset from WALS raw data
+
+wals.langs <- read_csv("raw_data/WALS/language.csv") %>% 
+  select(pk, Name = name)
+wals.id <- read_csv("raw_data/WALS/walslanguage.csv") %>% 
+  select(pk, genus_pk, iso_codes)
+wals.langs <- left_join(wals.langs, wals.id)
+wals.genus <- read_csv("raw_data/WALS/genus.csv") %>% 
+  select(genus_pk = pk, genus = name, family_pk)
+wals.langs <- wals.langs %>% left_join(wals.genus)
+wals.family <- read_csv("raw_data/WALS/family.csv") %>% 
+  select(family_pk = pk, family = name)
+wals.langs <- wals.langs %>% 
+  left_join(wals.family) %>% 
+  select(-pk, -genus_pk, -family_pk, iso_code = iso_codes) %>% 
+  separate_rows(iso_code, sep = ", ") # Separate languages with multiple iso_codes into their own rows
+write_csv(wals.langs,"processed_data/wals_info.csv")

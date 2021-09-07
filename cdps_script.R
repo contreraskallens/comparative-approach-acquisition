@@ -1,5 +1,6 @@
 library(tidyverse)
 library(wesanderson)
+library(childesr)
 
 # Load all processed data ----
 
@@ -21,36 +22,55 @@ isbilen <- read_csv("raw_data/isbilen_tallies.csv") %>%
   mutate(db = "Isbilen 2021") %>% 
   rename(In_DB = Language)
 
-
 slobin <- read_csv("raw_data/slobin_tallies.csv") %>% 
   mutate(db = "Slobin 2014") %>% 
   rename(In_DB = Language)
 
-all.db <- bind_rows(childes, many.babies, word.bank, isbilen, slobin)
+kidd_garcia <- read_csv("raw_data/kidd_garcia_tallies.csv") %>% 
+  mutate(db = "KiddGarcia 2021") %>% 
+  rename(In_DB = Language)
+
+all.db <- bind_rows(childes, many.babies, word.bank, isbilen, slobin, kidd_garcia)
 
 # Match to language data ----
 
-lang.key <- read_csv("processed_data/language_data.csv")
-
+lang.key <- read_csv("processed_data/language_key.csv") %>% 
+  distinct()
+wals.info <- read_csv("processed_data/wals_info.csv") %>% 
+  select(iso_code, Name, genus, family) %>% 
+  arrange(Name) %>%  # Preserve only first combination to avoid duplicate matches
+  distinct(iso_code, genus, family, .keep_all = TRUE)
 all.db <- left_join(all.db, lang.key) %>% 
   select(-In_DB) %>% 
-  filter(!(is.na(Language)))
+  filter(!(is.na(iso_code))) %>% 
+  left_join(wals.info)
+
+# Hand-coded languages not in WALS gotten from Glottolog
+
+not.in.wals <- filter(all.db, is.na(genus)) %>% 
+  select(-Name, -genus, -family)
+not.wals.key <- read_csv("processed_data/not_in_wals.csv")
+not.in.wals <- left_join(not.in.wals, not.wals.key)
+all.db <- filter(all.db, !(is.na(genus))) %>% 
+  bind_rows(not.in.wals)
 
 # Recode family and genus data ----
 
 recoded.db <- all.db %>% 
-  mutate(Family = ifelse(Family == "English", Family,
-                         ifelse(Family == "Indo-European", "Other Indo-European", "Non-Indo-European")),
-         Genus = ifelse(Genus %in% c("English", "Germanic", "Romance"), Genus, "Other"))
+  mutate(family = ifelse(Name == "English", "English",
+                         ifelse(family == "Indo-European", "Other Indo-European", "Non-Indo-European")),
+         genus = ifelse(Name == "English", "English", 
+                        ifelse(genus %in% c("English", "Germanic", "Romance"), genus, "Other")))
+
 
 # Plot genus data ----
 
 genus.db <- recoded.db %>% 
-  group_by(db, Genus) %>% 
+  group_by(db, genus) %>% 
   summarize(Count = sum(Count))
-genus.db$Genus <- factor(genus.db$Genus, levels = c("Other", "Romance", "Germanic", "English"))
+genus.db$genus <- factor(genus.db$genus, levels = c("Other", "Romance", "Germanic", "English"))
                            
-genus.plot <- ggplot(genus.db, aes(x = db, y = Count, fill = Genus, group = Genus)) +
+genus.plot <- ggplot(genus.db, aes(x = db, y = Count, fill = genus, group = genus)) +
   geom_bar(stat = "identity", position = "fill") +
   scale_fill_manual(name = "Language Group", values = wes_palettes$Darjeeling1[c(1,2,3,5)]) +
   theme_minimal() +
@@ -64,11 +84,11 @@ ggsave(plot = genus.plot, filename = "figures/genus_plot.png", dpi = 300, bg = "
 # Do it with families now ----
 
 family.db <- recoded.db %>% 
-  group_by(db, Family) %>% 
+  group_by(db, family) %>% 
   summarize(Count = sum(Count))
-family.db$Family <- factor(family.db$Family, levels = c("Non-Indo-European", "Other Indo-European", "English"))
+family.db$family <- factor(family.db$family, levels = c("Non-Indo-European", "Other Indo-European", "English"))
 
-family.plot <- ggplot(family.db, aes(x = db, y = Count, fill = Family, group = Family)) +
+family.plot <- ggplot(family.db, aes(x = db, y = Count, fill = family, group = family)) +
   geom_bar(stat = "identity", position = "fill") +
   scale_fill_manual(name = "Language Group", values = wesanderson::wes_palette("Darjeeling1", n = 4, type = "discrete")) +
   theme_minimal() +
@@ -80,28 +100,36 @@ family.plot
 ggsave(plot = family.plot, filename = "figures/family_plot.png", dpi = 300, bg = "white", 
        width = 2000, height = 800, units = "px") 
 
-# Generate paper plot. DO THIS ONLY IF YOU HAVE KIDD & GARCIA DATA ----
+# Generate paper plot ----
 
-kidd.garcia <- read_csv("raw_data/kidd_tallies.csv") %>% 
-  mutate(db = "Articles")
-  
-paper.db <- bind_rows(recoded.db, kidd.garcia) %>% 
-  filter(db %in% c("Babies", "Words", "Articles")) %>% 
-  group_by(db, Family) %>% 
+paper.db <- recoded.db %>% 
+  filter(db %in% c("Babies", "Words", "KiddGarcia 2021")) %>% 
+  mutate(db = ifelse(db == "KiddGarcia 2021", "Articles", db)) %>% 
+  group_by(db, genus) %>% 
   summarize(Count = sum(Count))
-paper.db$Family <- factor(paper.db$Family, levels = c("Non-Indo-European", "Other Indo-European", "English"))
+paper.db$genus <- factor(paper.db$genus, levels = c("Other", "Romance", "Germanic", "English"))
 paper.db$db <- factor(paper.db$db, levels = c("Words", "Babies", "Articles"))
 
-paper.plot <- ggplot(paper.db, aes(x = db, y = Count, fill = Family, group = Family)) +
+paper.plot <- ggplot(paper.db, aes(x = db, y = Count, fill = genus, group = genus)) +
   geom_bar(stat = "identity", position = "fill") +
   theme_minimal() +
   labs(y = "Proportion") +
-  scale_fill_manual(name = "Language Group", values = wesanderson::wes_palette("Darjeeling1", n = 4, type = "discrete")) +
+  scale_fill_manual(name = "Language Group", values = wes_palettes$Darjeeling1[c(1,2,3,5)]) +
   theme(axis.title.x = element_blank(), panel.grid.major.x = element_blank())
 paper.plot
-ggsave(plot = paper.plot, filename = "figures/cdps_family_small.png", dpi = 300, bg = "white", 
+ggsave(plot = paper.plot, filename = "figures/cdps_genus_small.png", dpi = 300, bg = "white", 
        width = 5, height = 2.5) 
-ggsave(plot = paper.plot, filename =  "figures/cdps_family.png", bg = "white", dpi = 1000,
+ggsave(plot = paper.plot, filename =  "figures/cdps_genus.png", bg = "white", dpi = 1000,
        width = 7.47, height = 4.59)
-ggsave(plot = paper.plot, filename =  "figures/cdps_family.pdf", bg = "white", dpi = 1000,
+ggsave(plot = paper.plot, filename =  "figures/cdps_genus.pdf", bg = "white", dpi = 1000,
        width = 7.47, height = 4.59)
+
+# Print percentages of families per database ----
+
+# Show number of CHILDES corpora
+
+nrow(childesr::get_corpora())
+
+paper.db %>% 
+  group_by(db) %>% 
+  mutate(Count = (Count / sum(Count)) * 100)
