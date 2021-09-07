@@ -5,11 +5,11 @@ Script for producing figures from Christiansen, Contreras Kallens &amp; Trecca (
 
 * `isbilen_tallies.csv`
 
-	Hand-extracted from Isbilen (2021) meta analysis of auditory statistical learning studies
+	Extracted from Isbilen (2021) meta analysis of auditory statistical learning studies
 
 * `kidd_garcia_tallies.csv`
 	
-	Hand-extracted from Kidd & Garcia (2021). How diverse is child language acquisition?. See Appendix A https://psyarxiv.com/jpeyq.
+	Extracted from Kidd & Garcia (2021). How diverse is child language acquisition?. See Appendix A https://psyarxiv.com/jpeyq.
 
 * `many_babies.csv`
 
@@ -34,21 +34,15 @@ Script for producing figures from Christiansen, Contreras Kallens &amp; Trecca (
 * `wals_info.csv`
 	Correspondence of iso_code to WALS data about Name, Genus and Family built in `process_data.R` using the files in `raw_data/WALS`. Using WALS release v2020.1, https://github.com/cldf-datasets/wals/releases.
 
-
 * `not_in_wals.csv`
 
 	Hand-constructed key for the handful of languages where no dialect relative was available in WALS. Includes iso code, name, and genus and family matched using Glottolog.
-
-
-
-
-**Note that the data from Kidd & Garcia (2021) is not publicly available. Please request it from the authors.**
 
 # Scripts
 
 * `process_data.R`
 
-	Reads and manipulates the data to generate a language by count dataframe. Generates `many_babies.csv`, `wordbank_data.csv` and `childes_utterance_stats.csv`.
+	Reads and manipulates the data to generate a language by count dataframe. Generates `many_babies.csv`, `wordbank_data.csv`, `childes_utterance_stats.csv` and `wals_info.csv`.
 
 * `cdps_script.R`
 
@@ -58,4 +52,4 @@ Script for producing figures from Christiansen, Contreras Kallens &amp; Trecca (
 
 	* A *Genus* plot (`genus_plot.png`) showing the proportions of items for English, Romance, Germanic and Other languages.
 	* A *Family* plot (`family_plot.png`) showing the proportions of items for English, Other Indo-European and Non-Indo-European languages.
-	* A *Paper* plot (**cdps_family**) using a *subset* of the databases, namely Childes, Many Babies and Kidd & Garcia, showing the proportion of items for English, Other Indo-European and Non-Indo-European languages. The version used in the paper is `cdps_family.pdf`. Also includes a smaller, web-friendlier version of the plot, `cdps_family_small.png`. **Note again that this plot can only be generated with the Kidd & Garcia (2021) data, which is not included in this repository**.
+	* A *Paper* plot (**cdps_family**) using a *subset* of the databases, namely Childes, Many Babies and Kidd & Garcia 2021, showing the proportion of items for English, Germanic, Romance and Other genera. The version used in the paper is `cdps_family.pdf`. Also includes a smaller, web-friendlier version of the plot, `cdps_family_small.png`.
