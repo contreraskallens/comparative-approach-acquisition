@@ -54,6 +54,7 @@ Script for producing figures from Christiansen, Contreras Kallens &amp; Trecca (
 	* A *Family* plot (`family_plot.png`) showing the proportions of items for English, Other Indo-European and Non-Indo-European languages.
 	* A *Paper* plot (**cdps_family**) using a *subset* of the databases, namely Childes, Many Babies and Kidd & Garcia 2021, showing the proportion of items for English, Germanic, Romance and Other genera. The version used in the paper is `cdps_family.pdf`. Also includes a smaller, web-friendlier version of the plot, `cdps_family_small.png`.
 
+***
 
 Shield: [![CC BY 4.0][cc-by-shield]][cc-by]
 
