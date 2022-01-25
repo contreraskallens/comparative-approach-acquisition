@@ -9,7 +9,7 @@ Script for producing figures from Christiansen, Contreras Kallens &amp; Trecca (
 
 * `kidd_garcia_tallies.csv`
 	
-	Extracted from Kidd & Garcia (2021). How diverse is child language acquisition?. See Appendix A https://psyarxiv.com/jpeyq.
+	Extracted from Kidd & Garcia (In press). How diverse is child language acquisition?. First Language. See Appendix A of preprint for data https://psyarxiv.com/jpeyq.
 
 * `many_babies.csv`
 
@@ -52,7 +52,7 @@ Script for producing figures from Christiansen, Contreras Kallens &amp; Trecca (
 
 	* A *Genus* plot (`genus_plot.png`) showing the proportions of items for English, Romance, Germanic and Other languages.
 	* A *Family* plot (`family_plot.png`) showing the proportions of items for English, Other Indo-European and Non-Indo-European languages.
-	* A *Paper* plot (**cdps_family**) using a *subset* of the databases, namely Childes, Many Babies and Kidd & Garcia 2021, showing the proportion of items for English, Germanic, Romance and Other genera. The version used in the paper is `cdps_family.pdf`. Also includes a smaller, web-friendlier version of the plot, `cdps_family_small.png`.
+	* A *Paper* plot (**cdps_family**) using a *subset* of the databases, namely Childes, Many Babies and Kidd & Garcia (In Press), showing the proportion of items for English, Germanic, Romance and Other genera. The version used in the paper is `cdps_family.pdf`. Also includes a smaller, web-friendlier version of the plot, `cdps_family_small.png`.
 
 ***
 
